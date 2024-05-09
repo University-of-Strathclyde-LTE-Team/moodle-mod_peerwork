@@ -88,13 +88,15 @@ if ($ADMIN->fulltree) {
     ));
 
     $scales = get_scales_menu();
+    // MYPB-4. Temporary default to get tests working. Needs fixed properly.
+    $defaultscale = array_key_first($scales);
 
     $settings->add(new admin_setting_configselect(
         'peerwork/critscale',
         get_string('critscale', 'mod_peerwork'),
         get_string('critscale_help', 'mod_peerwork'),
         null,
-        $scales
+        $defaultscale
     ));
 
     $settings->add(new admin_setting_configcheckbox(
