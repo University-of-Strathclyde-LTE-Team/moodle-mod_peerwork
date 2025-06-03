@@ -30,6 +30,8 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once('locallib.php');
 
+use mod_peerwork\reset_helper;
+
 /**
  * Returns the information on whether the module supports a feature
  *
@@ -443,13 +445,21 @@ function peerwork_pluginfile($course, $cm, $context, $filearea, $args, $forcedow
 }
 
 /**
+ * Define the reset form parameters for mod-peerwork.
+ * @param $mform
+ * @return void
+ */
+function peerwork_reset_course_form_definition(&$mform) {
+    reset_helper::reset_form($mform);
+}
+/**
  * Reset user data.
  *
  * @param stdClass $data the data submitted from the reset course.
  * @return array Status array.
  */
 function peerwork_reset_userdata($data) {
-    return [];
+    return reset_helper::reset_course_module($data);
 }
 
 /**
