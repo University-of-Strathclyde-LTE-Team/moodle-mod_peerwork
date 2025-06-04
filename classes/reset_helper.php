@@ -34,6 +34,17 @@ class reset_helper {
         $name = get_string('deleteallstudentdata', 'mod_peerwork');
         $mform->addElement('advcheckbox', 'reset_peerwork', $name);
     }
+
+    /**
+     * Course reset form defaults.
+     * @param  object $course
+     * @return array
+     */
+    public static function reset_course_form_defaults($course) {
+        return [
+            'reset_peerwork' => 1,
+        ];
+    }
     public static function reset_course_module($data) {
         global $DB;
 

@@ -462,6 +462,10 @@ function peerwork_reset_userdata($data) {
     return reset_helper::reset_course_module($data);
 }
 
+function peerwork_course_reset_form_defaults($course) {
+    return reset_helper::reset_course_form_defaults($course);
+}
+
 /**
  * Extends the global navigation tree by adding peerwork nodes if there is a relevant content
  *
