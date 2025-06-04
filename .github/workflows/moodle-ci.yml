@@ -1,6 +1,6 @@
 name: Moodle Plugin CI
 
-on: [ push, pull_request ]
+on: [push, pull_request]
 
 jobs:
   test:
@@ -8,7 +8,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:13
+        image: postgres:14
         env:
           POSTGRES_USER: 'postgres'
           POSTGRES_HOST_AUTH_METHOD: 'trust'
@@ -30,10 +30,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          php: [8.1, 8.2, 8.3]
-          moodle-branch: [ 'MOODLE_401_STABLE', 'MOODLE_404_STABLE', 'MOODLE_405_STABLE', 'MOODLE_500_STABLE']
-          database: [ 'pgsql', 'mariadb' ]
+        php: ['8.1', '8.2', '8.3']
+        moodle-branch: ['MOODLE_405_STABLE', 'MOODLE_500_STABLE']
+        database: [pgsql, mariadb]
 
     steps:
       - name: Check out repository code
@@ -64,7 +63,6 @@ jobs:
         env:
           DB: ${{ matrix.database }}
           MOODLE_BRANCH: ${{ matrix.moodle-branch }}
-          MUSTACHE_EXCLUDE_NAMES: 'peergrade_start.mustache,peergrade_end.mustache'
           # Uncomment this to run Behat tests using the Moodle App.
           # MOODLE_APP: 'true'
 
@@ -108,7 +106,7 @@ jobs:
       - name: Behat features
         id: behat
         if: ${{ !cancelled() }}
-        run: moodle-plugin-ci behat --profile chrome
+        run: moodle-plugin-ci behat --profile chrome --scss-deprecations
 
       - name: Upload Behat Faildump
         if: ${{ failure() && steps.behat.outcome == 'failure' }}
